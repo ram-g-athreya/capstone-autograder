@@ -1,0 +1,36 @@
+{
+  "name": "capstone",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "dependencies": {
+    "@octokit/rest": "^14.0.9",
+    "body-parser": "~1.17.1",
+    "bootstrap": "^4.0.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "hashset": "0.0.6",
+    "jade": "~1.11.0",
+    "jquery": "^3.3.1",
+    "less-middleware": "~2.2.0",
+    "moment": "^2.20.1",
+    "morgan": "~1.8.1",
+    "pug": "^2.0.0-rc.4",
+    "serve-favicon": "~2.4.2"
+  },
+  "babel": {
+    "plugins": [
+      "transform-async-to-generator"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1"
+  }
+}

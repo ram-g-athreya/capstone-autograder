@@ -1,0 +1,64 @@
+div.jumbotron
+    h1 !{data.userid}
+    h2 Overall Stats
+    table.table.table-striped
+        thead
+            tr
+                th(scope="col") Branch
+                th(scope="col") Commits
+                th(scope="col") Additions
+                th(scope="col") Deletions
+                th(scope="col") Total Changes
+        tbody
+            tr
+                th(scope="row") Master Branch
+                td(class={'red': data.master_activity.commits == 0}) !{data.master_activity.commits}
+                td !{data.master_activity.additions}
+                td !{data.master_activity.deletions}
+                td !{data.master_activity.total}
+            tr
+                th(scope="row") All Branches
+                td !{data.total_activity.commits}
+                td !{data.total_activity.additions}
+                td !{data.total_activity.deletions}
+                td !{data.total_activity.total}
+
+    h2 Daily Activity
+    table.table.table-striped
+        thead
+            tr
+                th(scope="col") Day
+                th(scope="col") Commits
+                th(scope="col") Additions
+                th(scope="col") Deletions
+                th(scope="col") Total Changes
+        tbody
+            -for(var day_index = 0; day_index < data.daily_activity.length; day_index++)
+                tr(class="clickable" data-toggle="collapse" data-target='#' + data.userid + '-' + day_index + '-commits')
+                    td !{day_index + 1}
+                    td(class={'red': data.daily_activity[day_index].commits == 0}) !{data.daily_activity[day_index].commits}
+                    td !{data.daily_activity[day_index].additions}
+                    td !{data.daily_activity[day_index].deletions}
+                    td(class={'red': data.daily_activity[day_index].total / data.total_activity.total > 0.5}) !{data.daily_activity[day_index].total}
+                tr
+                    td(colspan="5")
+                        div(class="collapse" id=data.userid + '-' + day_index + '-commits')
+                            table.table.table-striped
+                                thead
+                                    tr
+                                        th(scope="col") Branch
+                                        th(scope="col") Message
+                                        th(scope="col") Additions
+                                        th(scope="col") Deletions
+                                        th(scope="col") Total Changes
+                                        th(scope="col") Link
+                                tbody
+                                -for(var commit_index = 0; commit_index < data.daily_activity[day_index].commit_details.length; commit_index++)
+                                    tr
+                                        td !{data.daily_activity[day_index].commit_details[commit_index].branch}
+                                        td !{data.daily_activity[day_index].commit_details[commit_index].message}
+                                        td !{data.daily_activity[day_index].commit_details[commit_index].additions}
+                                        td !{data.daily_activity[day_index].commit_details[commit_index].deletions}
+                                        td(class={'red': data.daily_activity[day_index].total / data.total_activity.total > 0.5}) !{data.daily_activity[day_index].commit_details[commit_index].total}
+                                        td
+                                            a(target='_blank' href=data.daily_activity[day_index].commit_details[commit_index].html_url) View Commit

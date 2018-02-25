@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  h1= title
+  div.container
+    div.row
+      form(action='/' method='post')
+        div.form-group
+          label(for='token') Enter GitHub Access Token
+          input.form-control(id='token', type='text' placeholder='Enter GitHub Access Token' name='token')
+
+        div.form-group
+          label(for='start-date') Start Date
+          input.form-control(id='start-date', type='date' placeholder='Enter Start Date' name='start_date')
+
+        div.form-group
+          label(for='end-date') End Date
+          input.form-control(id='end-date', type='date' placeholder='Enter End Date' name='end-date')
+
+        div.form-group
+          label(for='owner') Owner
+          input.form-control(id='owner', type='text' placeholder='Enter Username of Owner of Repo' name='owner')
+
+        div.form-group
+          label(for='repo') Repo Name
+          input.form-control(id='repo', type='text' placeholder='Enter Repository Name' name='repo')
+
+        div.form-group
+          label(for='userids') GitHub User IDs of Members (comma separated)
+          input.form-control(id='userids', type='text' placeholder='Enter GitHub User Ids of members comma separated' name='userids')
+
+        button(type='submit' class="btn btn-primary") Submit
+
+    div#result.row
+
+  script(src='/javascripts/index.js')
+
