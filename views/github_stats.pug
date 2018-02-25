@@ -18,7 +18,7 @@ div.jumbotron
                 td !{data.master_activity.total}
             tr
                 th(scope="row") All Branches
-                td !{data.total_activity.commits}
+                td(class={'red': data.total_activity.commits == 0}) !{data.total_activity.commits}
                 td !{data.total_activity.additions}
                 td !{data.total_activity.deletions}
                 td !{data.total_activity.total}
