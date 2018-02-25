@@ -59,6 +59,6 @@ div.jumbotron
                                         td !{data.daily_activity[day_index].commit_details[commit_index].message}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].additions}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].deletions}
-                                        td(class={'red': data.daily_activity[day_index].commit_details[commit_index].total / data.total_activity.total > 0.5}) !{data.daily_activity[day_index].commit_details[commit_index].total}
+                                        td(class={'red': data.daily_activity[day_index].commit_details[commit_index].total / data.daily_activity[day_index].total > 0.5}) !{data.daily_activity[day_index].commit_details[commit_index].total}
                                         td
                                             a(target='_blank' href=data.daily_activity[day_index].commit_details[commit_index].html_url) View Commit
