@@ -35,7 +35,7 @@ div.jumbotron
         tbody
             -for(var day_index = 0; day_index < data.daily_activity.length; day_index++)
                 tr(class="clickable" data-toggle="collapse" data-target='#' + data.userid + '-' + day_index + '-commits')
-                    td !{day_index + 1}
+                    td !{moment(start_date).add(day_index, 'days').format('Do MMM')}
                     td(class={'red': data.daily_activity[day_index].commits == 0}) !{data.daily_activity[day_index].commits}
                     td !{data.daily_activity[day_index].additions}
                     td !{data.daily_activity[day_index].deletions}

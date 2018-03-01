@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var HashSet = require('hashset');
+require('moment-timezone');
 
 // https://octokit.github.io/rest.js/#api-Repos-getCommits
 const octokit = require('@octokit/rest')();
@@ -37,12 +38,13 @@ router.post('/', async (req, res, next) => {
     });
 
     var userid = req.body.userid;
+    var commits_hash = new HashSet();
     var data = {};
 
-    var commits_hash = new HashSet();
+    var start_date = moment.tz(req.body.start_date, 'America/Phoenix').startOf('day');
+    var end_date =  moment.tz(req.body.end_date, 'America/Phoenix').endOf('day');
 
-
-    var date_diff = get_day_difference(req.body.end_date, req.body.start_date) - 1;
+    var date_diff = get_day_difference(end_date, start_date) + 1;
     var daily_activity = create_daily_activity_array(date_diff);
     var master_activity = {commits: 0, additions: 0, deletions: 0, total: 0};
     var total_activity = {commits: 0, additions: 0, deletions: 0, total: 0};
@@ -65,21 +67,22 @@ router.post('/', async (req, res, next) => {
         var commits = await octokit.repos.getCommits({
             owner: req.body.owner,
             repo: req.body.repo,
-            since: req.body.start_date,
-            until: req.body.end_date,
+            since: start_date.toISOString(),
+            until: end_date.toISOString(),
             per_page: 100,
             author: userid,
             sha: branches[branch_index]
         });
 
-        if(commits.data.length) {
+        if(commits && commits.data.length) {
             for(var commits_index = 0; commits_index < commits.data.length; commits_index++) {
                 if(commits_hash.contains(commits.data[commits_index].sha)) {
                     continue;
                 }
+
+                var day_index = get_day_difference(commits.data[commits_index].commit.author.date, start_date);
                 commits_hash.add(commits.data[commits_index].sha);
 
-                var day_index = get_day_difference(commits.data[commits_index].commit.author.date, req.body.start_date);
                 var commit = await octokit.repos.getCommit({
                     owner: req.body.owner,
                     repo: req.body.repo,
@@ -120,7 +123,7 @@ router.post('/', async (req, res, next) => {
         master_activity: master_activity,
         userid: userid
     };
-    res.render('github_stats', {data: data, start_date: req.body.start_date});
+    res.render('github_stats', {data: data, start_date: start_date});
 });
 
 module.exports = router;

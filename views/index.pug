@@ -11,11 +11,11 @@ block content
 
         div.form-group
           label(for='start-date') Start Date
-          input.form-control(id='start-date', type='date' placeholder='Enter Start Date' name='start_date')
+          input.form-control(id='start-date', type='date' placeholder='MM/DD/YYYY ONLY' name='start_date')
 
         div.form-group
           label(for='end-date') End Date
-          input.form-control(id='end-date', type='date' placeholder='Enter End Date' name='end-date')
+          input.form-control(id='end-date', type='date' placeholder='MM/DD/YYYY ONLY' name='end_date')
 
         div.form-group
           label(for='owner') Owner
@@ -31,6 +31,8 @@ block content
 
         button(type='submit' class="btn btn-primary") Submit
 
+    div
+      a#permalink.row
     div#result.row
 
   script(src='/javascripts/index.js')
