@@ -12,7 +12,6 @@ $(document).ready(function() {
     var queryParams = parseQuery(window.location.search);
     for(var key in queryParams) {
         if(key.length) {
-            console.log(queryParams[key]);
             $('[name=' + key + ']').val(queryParams[key]);
         }
     }
@@ -21,7 +20,7 @@ $(document).ready(function() {
         e.preventDefault();
         var array = $(this).serializeArray();
         var data = {};
-        var permalink = window.location.origin + '?';
+        var permalink = window.location.origin + '/taiga?';
         for(var index = 0; index < array.length; index++) {
             data[array[index].name] = array[index].value;
             permalink += array[index].name + '=' + encodeURIComponent(array[index].value) + '&';
@@ -32,17 +31,14 @@ $(document).ready(function() {
         $('#permalink').text(permalink);
         $('#permalink').attr('href', permalink);
 
-        var userids = data.userids.split(',');
-        for(var index = 0; index < userids.length; index++) {
-            data.userid = userids[index];
-            $.ajax({
-                type: 'post',
-                url: '/',
-                data: data,
-                success: function(response) {
-                    $('#result').append(response);
-                }
-            });
-        }
+
+        $.ajax({
+            type: 'post',
+            url: '/taiga',
+            data: data,
+            success: function(response) {
+                $('#result').append(response);
+            }
+        });
     });
 });

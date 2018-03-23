@@ -1,0 +1,61 @@
+div.jumbotron
+    h1 User Stories
+    -for(var id in data.user_stories)
+        -var user_story = data.user_stories[id]
+        div.card
+            div.card-body
+                h5.card-title
+                    -var user_story_href = data.project_url + '/us/' + user_story.ref
+                    a(href=user_story_href target='_blank') #!{user_story.ref}&nbsp;
+                    span !{user_story.subject}&nbsp;
+                h6
+                    strong Milestone: !{user_story.milestone_name}
+                p !{user_story.description}
+
+    h1 Tasks
+    -for(var id in data.tasks)
+        -var task = data.tasks[id]
+        div.card
+            div.card-body
+                h5.card-title
+                    -var task_href = data.project_url + '/task/' + task.ref
+                    a(href=task_href target='_blank') #!{task.ref}&nbsp;
+                    span !{task.subject}&nbsp;
+                    span.badge.badge-primary !{task.status}
+                p !{task.description}
+                h6
+                    strong User Story #!{task.user_story.ref}: !{task.user_story}
+
+    h1(style='padding-top: 15px;') Users
+    -for(var id in data.users)
+        -var user = data.users[id]
+        div.card
+            div.card-body
+                h3.card-title !{user.name} (!{user.username})
+                table.table.table-striped
+                    thead
+                        tr
+                            th(scope="col") Day
+                            th(scope="col") Activity Count
+                    tbody
+                        -for(var day_index = 0; day_index < user.daily_activity.length; day_index++)
+                            tr(class="clickable" data-toggle="collapse" data-target='#' + id + '-' + day_index + '-activity')
+                                td !{moment(data.start_date).add(day_index, 'days').format('Do MMM (ddd)')}
+                                td(class={'red': user.daily_activity[day_index].activity_count == 0}) !{user.daily_activity[day_index].activity_count}
+                            tr
+                                td(colspan="2")
+                                    div(class="collapse" id=id + '-' + day_index + '-activity')
+                                        table.table.table-striped
+                                            thead
+                                                tr
+                                                    th(scope="col") Task / User Story
+                                                    th(scope="col") Event Type
+                                                    th(scope="col") Changes
+                                            tbody
+                                            // Running Activity Loop in reverse since since data is fetched latest first from API
+                                            -for(var activity_index = user.daily_activity[day_index].activity_details.length - 1; activity_index > -1; activity_index--)
+                                                tr
+                                                    td !{user.daily_activity[day_index].activity_details[activity_index].target}
+                                                    td !{user.daily_activity[day_index].activity_details[activity_index].event_type}
+                                                    td !{user.daily_activity[day_index].activity_details[activity_index].changes}
+

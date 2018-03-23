@@ -6,8 +6,12 @@ block content
     div.row
       form(action='/' method='post')
         div.form-group
-          label(for='token') Enter GitHub Access Token
-          input.form-control(id='token', type='text' placeholder='Enter Taiga Access Token' name='token')
+          label(for='username') Enter Taiga Username
+          input.form-control(id='username', type='text' placeholder='Enter Taiga Username' name='username')
+
+        div.form-group
+          label(for='password') Enter Taiga Password
+          input.form-control(id='password', type='text' placeholder='Enter Taiga Password' name='password')
 
         div.form-group
           label(for='start-date') Start Date
@@ -18,16 +22,8 @@ block content
           input.form-control(id='end-date', type='date' placeholder='MM/DD/YYYY ONLY' name='end_date')
 
         div.form-group
-          label(for='owner') Owner
-          input.form-control(id='owner', type='text' placeholder='Enter Username of Owner of Repo' name='owner')
-
-        div.form-group
-          label(for='repo') Repo Name
-          input.form-control(id='repo', type='text' placeholder='Enter Repository Name' name='repo')
-
-        div.form-group
-          label(for='userids') GitHub User IDs of Members (comma separated)
-          input.form-control(id='userids', type='text' placeholder='Enter GitHub User Ids of members comma separated' name='userids')
+          label(for='slug') Project Slug
+          input.form-control(id='slug', type='text' placeholder='Enter Project Slug' name='slug')
 
         button(type='submit' class="btn btn-primary") Submit
 
