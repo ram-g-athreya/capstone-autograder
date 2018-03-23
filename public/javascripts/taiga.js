@@ -36,6 +36,7 @@ $(document).ready(function() {
             type: 'post',
             url: '/taiga',
             data: data,
+            timeout: 0,
             success: function(response) {
                 $('#result').append(response);
             }
