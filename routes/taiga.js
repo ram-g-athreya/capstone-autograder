@@ -6,7 +6,7 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var HashSet = require('hashset');
-var taiga = require('../lib/taiga');
+//var taiga = require('../lib/taiga');
 
 require('moment-timezone');
 
