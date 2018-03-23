@@ -2,6 +2,7 @@
   "watch": [
     "app.js",
     "views/*",
-    "routes/*"
+    "routes/*",
+    "lib/*"
   ]
 }

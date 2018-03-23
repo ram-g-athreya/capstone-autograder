@@ -1,5 +1,5 @@
 div.jumbotron
-    h1 !{data.userid}
+    h1 !{data.name} (!{data.userid})
     h2 Overall Stats
     table.table.table-striped
         thead
@@ -22,7 +22,16 @@ div.jumbotron
                 td !{data.total_activity.additions}
                 td !{data.total_activity.deletions}
                 td !{data.total_activity.total}
-
+    h2 Inactivity Streaks
+    p
+        div
+            h6
+                strong Longest Period of Inactivity: &nbsp;
+                span(class={'red': Math.max.apply(null, data.inactivity_streaks) >= 7}) !{Math.max.apply(null, data.inactivity_streaks)} Days
+        div
+            h6
+                strong All Inactivity Periods: &nbsp;
+                span !{data.inactivity_streaks.join(', ')} Days
     h2 Daily Activity
     table.table.table-striped
         thead

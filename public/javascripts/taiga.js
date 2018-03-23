@@ -12,6 +12,7 @@ $(document).ready(function() {
     var queryParams = parseQuery(window.location.search);
     for(var key in queryParams) {
         if(key.length) {
+            console.log(queryParams[key]);
             $('[name=' + key + ']').val(queryParams[key]);
         }
     }

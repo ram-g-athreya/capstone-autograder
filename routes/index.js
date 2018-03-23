@@ -39,7 +39,10 @@ router.post('/', async (req, res, next) => {
 
     var userid = req.body.userid;
     var commits_hash = new HashSet();
-    var data = {};
+    var user = await octokit.search.users({q: userid});
+    var name = await octokit.users.getById({id: user.data.items[0].id});
+    name = name.data.name;
+    var data;
 
     var start_date = moment.tz(req.body.start_date, 'America/Phoenix').startOf('day');
     var end_date =  moment.tz(req.body.end_date, 'America/Phoenix').endOf('day');
@@ -117,11 +120,39 @@ router.post('/', async (req, res, next) => {
         }
     }
 
+    // Calculating Inactivity Streaks
+    var inactivity_streaks = [], streak_in_progress = false, streak_count = 0;
+    for(var index = 0; index < daily_activity.length; index++) {
+        if(!streak_in_progress) {
+            if(daily_activity[index].commits == 0) {
+                streak_in_progress = true;
+                streak_count = 1;
+            }
+        }
+        else {
+            if(daily_activity[index].commits == 0) {
+                streak_count += 1;
+            }
+            else {
+                if(streak_count > 1) {
+                    inactivity_streaks.push(streak_count);
+                }
+                streak_in_progress = false;
+            }
+        }
+    }
+
+    if(streak_in_progress) {
+        inactivity_streaks.push(streak_count);
+    }
+
     data = {
         daily_activity: daily_activity,
         total_activity: total_activity,
         master_activity: master_activity,
-        userid: userid
+        inactivity_streaks: inactivity_streaks,
+        userid: userid,
+        name: name
     };
     res.render('github_stats', {data: data, start_date: start_date});
 });

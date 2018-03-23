@@ -8,6 +8,7 @@ var lessMiddleware = require('less-middleware');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var taiga = require('./routes/taiga');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dis
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/taiga', taiga);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
