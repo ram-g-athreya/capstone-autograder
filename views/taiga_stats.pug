@@ -1,4 +1,21 @@
 div.jumbotron
+    h1 Milestones
+        -for(var id in data.milestones)
+            -var milestone = data.milestones[id]
+            div.card
+                div.card-body
+                    h5.card-title
+                        -var milestone_href = data.project_url + '/taskboard/' + milestone.slug
+                        a(href=milestone_href target='_blank') !{milestone.name}
+                    h6
+                        div
+                            strong Dates:&nbsp;
+                            span !{moment(milestone.estimated_start).format('Do MMM (ddd)')} to !{moment(milestone.estimated_finish).format('Do MMM (ddd)')}
+                        div
+                            strong Duration:&nbsp;
+                            span !{moment(milestone.estimated_finish).diff(moment(milestone.estimated_start), 'week')} Weeks
+
+
     h1 User Stories
     -for(var id in data.user_stories)
         -var user_story = data.user_stories[id]
@@ -23,8 +40,6 @@ div.jumbotron
                     span !{task.subject}&nbsp;
                     span.badge.badge-primary !{task.status}
                 p !{task.description}
-                h6
-                    strong User Story #!{task.user_story.ref}: !{task.user_story}
 
     h1(style='padding-top: 15px;') Users
     -for(var id in data.users)
@@ -48,9 +63,10 @@ div.jumbotron
                                         table.table.table-striped
                                             thead
                                                 tr
-                                                    th(scope="col") Task / User Story
+                                                    th(scope="col") Task / User Story / Sprint / Wiki
                                                     th(scope="col") Event Type
                                                     th(scope="col") Changes
+                                                    th(scope="col") Link
                                             tbody
                                             // Running Activity Loop in reverse since since data is fetched latest first from API
                                             -for(var activity_index = user.daily_activity[day_index].activity_details.length - 1; activity_index > -1; activity_index--)
@@ -58,4 +74,5 @@ div.jumbotron
                                                     td !{user.daily_activity[day_index].activity_details[activity_index].target}
                                                     td !{user.daily_activity[day_index].activity_details[activity_index].event_type}
                                                     td !{user.daily_activity[day_index].activity_details[activity_index].changes}
-
+                                                    td
+                                                        a(href=data.project_url + user.daily_activity[day_index].activity_details[activity_index].link target='_blank') Link

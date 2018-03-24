@@ -31,7 +31,7 @@ $(document).ready(function() {
         $('#permalink').text(permalink);
         $('#permalink').attr('href', permalink);
 
-
+        $('button').attr('disabled', true);
         $.ajax({
             type: 'post',
             url: '/taiga',
@@ -40,6 +40,8 @@ $(document).ready(function() {
             success: function(response) {
                 $('#result').append(response);
             }
+        }).done(function() {
+            $('button').attr('disabled', false);
         });
     });
 });

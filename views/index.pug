@@ -29,11 +29,12 @@ block content
           label(for='userids') GitHub User IDs of Members (comma separated)
           input.form-control(id='userids', type='text' placeholder='Enter GitHub User Ids of members comma separated' name='userids')
 
-        button(type='submit' class="btn btn-primary") Submit
+        button(type='submit' class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing...") Submit
 
     div
       strong
         a#permalink.row
+    i.fa.fa-circle-o-notch
     div#result.row
 
   script(src='/javascripts/index.js')

@@ -32,6 +32,7 @@ $(document).ready(function() {
         $('#permalink').attr('href', permalink);
 
         var userids = data.userids.split(',');
+        $('button').attr('disabled', true);
         for(var index = 0; index < userids.length; index++) {
             data.userid = userids[index];
             $.ajax({
@@ -41,6 +42,8 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#result').append(response);
                 }
+            }).done(function() {
+                $('button').attr('disabled', false);
             });
         }
     });

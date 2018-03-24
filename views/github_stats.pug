@@ -32,6 +32,11 @@ div.jumbotron
             h6
                 strong All Inactivity Periods: &nbsp;
                 span !{data.inactivity_streaks.join(', ')} Days
+        div
+            h6
+                -var total_inactive_days = data.inactivity_streaks.reduce(function(a, b) {return a + b;})
+                strong Total Inactive Days: &nbsp;
+                    span(class={'red': total_inactive_days >= 7}) !{total_inactive_days} Days
     h2 Daily Activity
     table.table.table-striped
         thead
