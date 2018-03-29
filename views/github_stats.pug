@@ -60,6 +60,7 @@ div.jumbotron
                             table.table.table-striped
                                 thead
                                     tr
+                                        th(scope="col") Time
                                         th(scope="col") Branch
                                         th(scope="col") Message
                                         th(scope="col") Additions
@@ -67,8 +68,9 @@ div.jumbotron
                                         th(scope="col") Total Changes
                                         th(scope="col") Link
                                 tbody
-                                -for(var commit_index = 0; commit_index < data.daily_activity[day_index].commit_details.length; commit_index++)
+                                -for(var commit_index = data.daily_activity[day_index].commit_details.length - 1; commit_index > -1; commit_index--)
                                     tr
+                                        td !{moment(data.daily_activity[day_index].commit_details[commit_index].timestamp).format('HH:mm')}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].branch}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].message}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].additions}

@@ -108,7 +108,9 @@ router.post('/', async (req, res, next) => {
                 daily_activity[day_index].additions += commit.data.stats.additions;
                 daily_activity[day_index].deletions += commit.data.stats.deletions;
                 daily_activity[day_index].total += commit.data.stats.total;
+
                 daily_activity[day_index].commit_details.push({
+                    timestamp: commit.meta['last-modified'],
                     message: commits.data[commits_index].commit.message,
                     html_url: commits.data[commits_index].html_url,
                     branch: branches[branch_index],
