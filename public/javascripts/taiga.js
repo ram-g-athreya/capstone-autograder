@@ -16,6 +16,14 @@ $(document).ready(function() {
         }
     }
 
+    if(localStorage.start_date) {
+        $('#start-date').val(localStorage.start_date);
+    }
+
+    if(localStorage.end_date) {
+        $('#end-date').val(localStorage.end_date);
+    }
+
     $('form').submit(function(e) {
         e.preventDefault();
         var array = $(this).serializeArray();
@@ -25,6 +33,9 @@ $(document).ready(function() {
             data[array[index].name] = array[index].value;
             permalink += array[index].name + '=' + encodeURIComponent(array[index].value) + '&';
         }
+        localStorage.start_date = $('#start-date').val();
+        localStorage.end_date = $('#end-date').val();
+
         permalink = permalink.substring(0, permalink.length - 1);
 
         $('#result').html('');
@@ -39,6 +50,10 @@ $(document).ready(function() {
             timeout: 0,
             success: function(response) {
                 $('#result').append(response);
+            },
+            error: function(response) {
+                alert('Please note that unfortunately the request has failed. Try again later.')
+                $('button').attr('disabled', false);
             }
         }).done(function() {
             $('button').attr('disabled', false);

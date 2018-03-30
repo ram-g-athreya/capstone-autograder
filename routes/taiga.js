@@ -18,9 +18,6 @@ router.get('/', function(req, res, next) {
 router.post('/', async function(req, res, next) {
     var data = await taiga.getProjectActivity({username: req.body.username, password: req.body.password}, req.body.start_date, req.body.end_date, req.body.slug);
     data.project_url = 'https://tree.taiga.io/project/' + req.body.slug;
-    //'ram-g-athreya'
-    //'therealdavidhenderson-ser517-travlendar'
-    // res.render('taiga', { title: 'Capstone Taiga Autograder' });
     res.render('taiga_stats', {data: data});
 });
 

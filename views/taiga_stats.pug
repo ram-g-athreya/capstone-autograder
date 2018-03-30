@@ -44,7 +44,7 @@ div.jumbotron
     h1(style='padding-top: 15px;') Users
     -for(var id in data.users)
         -var user = data.users[id]
-        div.card
+        div.card(style='margin-bottom: 20px')
             div.card-body
                 h3.card-title !{user.name} (!{user.username})
                 table.table.table-striped
