@@ -71,7 +71,7 @@ div.jumbotron
                                 tbody
                                 -for(var commit_index = data.daily_activity[day_index].commit_details.length - 1; commit_index > -1; commit_index--)
                                     tr
-                                        td !{moment(data.daily_activity[day_index].commit_details[commit_index].timestamp).format('HH:mm')}
+                                        td !{moment(data.daily_activity[day_index].commit_details[commit_index].timestamp).format('hh:mm A')}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].branch}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].message}
                                         td !{data.daily_activity[day_index].commit_details[commit_index].additions}
