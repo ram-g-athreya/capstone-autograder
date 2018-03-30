@@ -26,7 +26,7 @@ div.jumbotron
     p
         div
             h6
-                -var max_inactive_days = data.inactivity_streaks > 0 ? Math.max.apply(null, data.inactivity_streaks) : 0;
+                -var max_inactive_days = data.inactivity_streaks.length > 0 ? Math.max.apply(null, data.inactivity_streaks) : 0;
                 strong Longest Period of Inactivity: &nbsp;
                 span(class={'red': max_inactive_days >= 7}) !{max_inactive_days} Days
         div
