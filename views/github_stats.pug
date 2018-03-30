@@ -26,15 +26,16 @@ div.jumbotron
     p
         div
             h6
+                -var max_inactive_days = data.inactivity_streaks > 0 ? Math.max.apply(null, data.inactivity_streaks) : 0;
                 strong Longest Period of Inactivity: &nbsp;
-                span(class={'red': Math.max.apply(null, data.inactivity_streaks) >= 7}) !{Math.max.apply(null, data.inactivity_streaks)} Days
+                span(class={'red': max_inactive_days >= 7}) !{max_inactive_days} Days
         div
             h6
                 strong All Inactivity Periods: &nbsp;
-                span !{data.inactivity_streaks.join(', ')} Days
+                span !{data.inactivity_streaks.length > 0 ? data.inactivity_streaks.join(', ') : 0} Days
         div
             h6
-                -var total_inactive_days = data.inactivity_streaks.reduce(function(a, b) {return a + b;})
+                -var total_inactive_days = data.inactivity_streaks.length > 0 ? data.inactivity_streaks.reduce(function(a, b) {return a + b;}) : 0
                 strong Total Inactive Days: &nbsp;
                     span(class={'red': total_inactive_days >= 7}) !{total_inactive_days} Days
     h2 Daily Activity
