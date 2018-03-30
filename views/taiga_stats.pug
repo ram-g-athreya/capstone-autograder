@@ -47,6 +47,24 @@ div.jumbotron
         div.card(style='margin-bottom: 20px')
             div.card-body
                 h3.card-title !{user.name} (!{user.username})
+
+                h3 Inactivity Streaks
+                    p
+                        div
+                            h6
+                                -var max_inactive_days = data.inactivity_streaks[id].length > 0 ? Math.max.apply(null, data.inactivity_streaks[id]) : 0;
+                                strong Longest Period of Inactivity: &nbsp;
+                                span(class={'red': max_inactive_days >= 7}) !{max_inactive_days} Days
+                        div
+                            h6
+                                strong All Inactivity Periods: &nbsp;
+                                span !{data.inactivity_streaks[id].length > 0 ? data.inactivity_streaks[id].join(', ') : 0} Days
+                        div
+                            h6
+                                -var total_inactive_days = data.inactivity_streaks[id].length > 0 ? data.inactivity_streaks[id].reduce(function(a, b) {return a + b;}) : 0
+                                strong Total Inactive Days: &nbsp;
+                                    span(class={'red': total_inactive_days >= 7}) !{total_inactive_days} Days
+
                 table.table.table-striped
                     thead
                         tr
@@ -63,6 +81,7 @@ div.jumbotron
                                         table.table.table-striped
                                             thead
                                                 tr
+                                                    th(scope="col") Time
                                                     th(scope="col") Task / User Story / Sprint / Wiki
                                                     th(scope="col") Event Type
                                                     th(scope="col") Changes
@@ -71,6 +90,7 @@ div.jumbotron
                                             // Running Activity Loop in reverse since since data is fetched latest first from API
                                             -for(var activity_index = user.daily_activity[day_index].activity_details.length - 1; activity_index > -1; activity_index--)
                                                 tr
+                                                    td !{moment(user.daily_activity[day_index].activity_details[activity_index].timestamp).format('hh:mm A')}
                                                     td !{user.daily_activity[day_index].activity_details[activity_index].target}
                                                     td !{user.daily_activity[day_index].activity_details[activity_index].event_type}
                                                     td !{user.daily_activity[day_index].activity_details[activity_index].changes}

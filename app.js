@@ -20,7 +20,7 @@ app.locals.moment = require('moment');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(timeout('1000s'));
+// app.use(timeout('1000s'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -55,6 +55,7 @@ app.use(function(err, req, res, next) {
 
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    throw "Unhandled Rejection at: Promise", p, 'reason:', reason;
     // application specific logging, throwing an error, or other logic here
 });
 
