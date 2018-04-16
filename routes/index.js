@@ -83,7 +83,7 @@ router.post('/', async (req, res, next) => {
                     continue;
                 }
 
-                var day_index = get_day_difference(commits.data[commits_index].commit.author.date, start_date);
+                var day_index = get_day_difference(commits.data[commits_index].commit.committer.date, start_date);
                 commits_hash.add(commits.data[commits_index].sha);
 
                 var commit = await octokit.repos.getCommit({
