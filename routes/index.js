@@ -39,9 +39,13 @@ router.post('/', async (req, res, next) => {
 
     var userid = req.body.userid;
     var commits_hash = new HashSet();
-    var user = await octokit.search.users({q: userid});
-    var name = await octokit.users.getById({id: user.data.items[0].id});
-    name = name.data.name;
+    var user = await octokit.search.users({q: userid}), name = '';
+
+    if(user.data.items && user.data.items[0]) {
+        name = await octokit.users.getById({id: user.data.items[0].id});
+        name = name.data.name;
+    }
+
     var data;
 
     var start_date = moment.tz(req.body.start_date, 'America/Phoenix').startOf('day');
