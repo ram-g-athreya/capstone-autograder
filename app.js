@@ -11,6 +11,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var taiga = require('./routes/taiga');
 
+const nodemailer = require('nodemailer');
+
 var app = express();
 
 // view engine setup
@@ -54,9 +56,31 @@ app.use(function(err, req, res, next) {
 });
 
 process.on('unhandledRejection', (reason, p) => {
-    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
-    throw "Unhandled Rejection at: Promise", p, 'reason:', reason;
-    // application specific logging, throwing an error, or other logic here
+    throw new Error(reason);
+}).on('uncaughtException', (error) => {
+    if(process.env.EMAIL_USERNAME) {
+        nodemailer.createTestAccount((err, account) => {
+            // create reusable transporter object using the default SMTP transport
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.EMAIL_USERNAME,
+                    pass: process.env.EMAIL_PASSWORD
+                }
+            });
+
+            let mailOptions = {
+                to: 'ramgnsn5@gmail.com',
+                subject: 'Capstone Autograder - Promise Error',
+                text: JSON.stringify(error, Object.getOwnPropertyNames(error))
+            };
+
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+
+            });
+        });
+    }
 });
 
 module.exports = app;
