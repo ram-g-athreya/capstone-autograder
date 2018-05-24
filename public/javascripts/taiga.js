@@ -16,13 +16,13 @@ $(document).ready(function() {
         }
     }
 
-    if(localStorage.start_date) {
-        $('#start-date').val(localStorage.start_date);
-    }
-
-    if(localStorage.end_date) {
-        $('#end-date').val(localStorage.end_date);
-    }
+    // if(localStorage.start_date) {
+    //     $('#start-date').val(localStorage.start_date);
+    // }
+    //
+    // if(localStorage.end_date) {
+    //     $('#end-date').val(localStorage.end_date);
+    // }
 
     $('form').submit(function(e) {
         e.preventDefault();

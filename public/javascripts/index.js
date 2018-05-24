@@ -16,13 +16,13 @@ $(document).ready(function() {
         }
     }
 
-    if(localStorage.start_date) {
-        $('#start-date').val(localStorage.start_date);
-    }
-
-    if(localStorage.end_date) {
-        $('#end-date').val(localStorage.end_date);
-    }
+    // if(localStorage.start_date) {
+    //     $('#start-date').val(localStorage.start_date);
+    // }
+    //
+    // if(localStorage.end_date) {
+    //     $('#end-date').val(localStorage.end_date);
+    // }
 
     $('form').submit(function(e) {
         e.preventDefault();
@@ -41,23 +41,19 @@ $(document).ready(function() {
         $('#permalink').text(permalink);
         $('#permalink').attr('href', permalink);
 
-        var userids = data.userids.split(',');
         $('button').attr('disabled', true);
-        for(var index = 0; index < userids.length; index++) {
-            data.userid = userids[index];
-            $.ajax({
-                type: 'post',
-                url: '/',
-                data: data,
-                success: function(response) {
-                    $('#result').append(response);
-                }, error: function(response) {
-                alert('Please note that unfortunately the request has failed. Try again later.')
-                $('button').attr('disabled', false);
-            }
-            }).done(function() {
-                $('button').attr('disabled', false);
-            });
+        $.ajax({
+            type: 'post',
+            url: '/',
+            data: data,
+            success: function(response) {
+                $('#result').append(response);
+            }, error: function(response) {
+            alert('Please note that unfortunately the request has failed. Try again later.');
+            $('button').attr('disabled', false);
         }
+        }).done(function() {
+            $('button').attr('disabled', false);
+        });
     });
 });

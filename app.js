@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
-var timeout = require('connect-timeout')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
